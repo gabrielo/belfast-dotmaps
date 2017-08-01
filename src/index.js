@@ -2,8 +2,8 @@ var map;
 var gl;
 
 var mapOptions = {
-  zoom: 2,
-  center: new google.maps.LatLng(0.0, 0.0)
+  zoom: 12,
+  center: new google.maps.LatLng(54.59, -5.92)
 };
 
 function init() {
