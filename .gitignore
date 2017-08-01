@@ -6,4 +6,4 @@ data/*
 !data/*.ipynb
 !data/ramp.txt
 localconfig
-
+demo
