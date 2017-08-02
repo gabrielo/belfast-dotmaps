@@ -1,3 +1,4 @@
+// utils.js
 function createShader(gl, type, source) {
     var shader = gl.createShader(type);
     gl.shaderSource(shader, source);
@@ -81,3 +82,30 @@ function bindFramebuffer(gl, framebuffer, texture) {
     }
 }
 
+function LatLongToPixelXY(latitude, longitude) {
+    var pi_180 = Math.PI / 180.0;
+    var pi_4 = Math.PI * 4;
+    var sinLatitude = Math.sin(latitude * pi_180);
+    var pixelY = (0.5 - Math.log((1 + sinLatitude) / (1 - sinLatitude)) / (pi_4)) * 256;
+    var pixelX = ((longitude + 180) / 360) * 256;
+    var pixel = { x: pixelX, y: pixelY };
+    return pixel;
+}
+
+function scaleMatrix(matrix, scaleX, scaleY) {
+  matrix[0] *= scaleX;
+  matrix[1] *= scaleX;
+  matrix[2] *= scaleX;
+  matrix[3] *= scaleX;
+  matrix[4] *= scaleY;
+  matrix[5] *= scaleY;
+  matrix[6] *= scaleY;
+  matrix[7] *= scaleY;
+}
+
+function translateMatrix(matrix, tx, ty) {
+  matrix[12] += matrix[0]*tx + matrix[4]*ty;
+  matrix[13] += matrix[1]*tx + matrix[5]*ty;
+  matrix[14] += matrix[2]*tx + matrix[6]*ty;
+  matrix[15] += matrix[3]*tx + matrix[7]*ty;
+}
