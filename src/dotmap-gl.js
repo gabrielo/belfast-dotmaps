@@ -20,19 +20,19 @@ var dotMapFragmentShader =
 'void main() {\n' +
 '    vec4 color;\n' +
 '    if (v_val == 1.0) {\n' +
-'      color = vec4(1.0, 0.0, 0.0, 1.0); \n' +
+'      color = vec4(228.0/255., 26.0/255., 28.0/255., .85); \n' +
 '    }\n' + 
 '    else if (v_val == 2.0) {\n' +
-'      color = vec4(0.0, 1.0, 0.0, 1.0); \n' +
+'      color = vec4(55.0/255., 126.0/255., 184.0/255., .85); \n' +
 '    }\n' + 
 '    else if (v_val == 3.0) {\n' +
-'      color = vec4(0.0, 0.0, 1.0, 1.0); \n' +
+'      color = vec4(77.0/255., 175.0/255., 74.0/255., .85); \n' +
 '    }\n' + 
 '    else if (v_val == 4.0) {\n' +
-'      color = vec4(1.0, 1.0, 1.0, 1.0); \n' +
+'      color = vec4(152.0/255., 78.0/255., 163.0/255., .85); \n' +
 '    }\n' + 
 '    else {\n' +
-'      color = vec4(0.0, 0.0, 0.0, 1.0); \n' +
+'      color = vec4(255.0/255., 127.0/255., 0.0, .85); \n' +
 '    }\n' + 
 '    gl_FragColor = color;\n' +
 '}\n';
@@ -46,7 +46,7 @@ var DotmapGl = function DotmapGl(gl) {
         'buffer': null,
         'ready': false
     };
-    this.showDotmap = false;
+    this.showDotmap = true;
 
 }
 
