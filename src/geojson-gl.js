@@ -104,8 +104,8 @@ GeoJSONGL.prototype.draw = function draw(transform, options) {
         bindAttribute(gl, program.program, 'a_color', 3, gl.FLOAT, false, 20, 8);    
         gl.uniformMatrix4fv(program.u_map_matrix, false, transform);
         if (this.showSmallAreas) {
-        gl.drawArrays(gl.TRIANGLES, 0, buffer.count);
-            
+          gl.drawArrays(gl.TRIANGLES, 0, buffer.count);
+
         }
         gl.disable(gl.BLEND);
     }

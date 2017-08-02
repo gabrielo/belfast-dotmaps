@@ -73,7 +73,7 @@ DotmapGl.prototype.draw = function draw(transform, options) {
     if (this.buffer.ready && this.showDotmap) {
         var options = options || {};
         var gl = this.gl;
-        gl.clear(gl.COLOR_BUFFER_BIT);
+        //gl.clear(gl.COLOR_BUFFER_BIT);
         gl.enable(gl.BLEND);
         gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
         var program = this.program;
@@ -83,8 +83,10 @@ DotmapGl.prototype.draw = function draw(transform, options) {
         bindAttribute(gl, program.program, 'a_coord', 2, gl.FLOAT, false, this.buffer.numAttributes*4, 0);    
         bindAttribute(gl, program.program, 'a_val', 1, gl.FLOAT, false, this.buffer.numAttributes*4, 8);    
         gl.uniformMatrix4fv(program.u_map_matrix, false, transform);
-
+        if (this.showDotmap) {
         gl.drawArrays(gl.POINTS, 0, buffer.count);
+
+        }
         gl.disable(gl.BLEND);
     }
 };
