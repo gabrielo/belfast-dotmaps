@@ -1,4 +1,5 @@
 var geojsonGL;
+var dotmapGl;
 var map;
 var gl;
 var canvasLayer;
@@ -35,6 +36,7 @@ function update() {
   var translation = canvasLayer.getMapTranslation();
   translateMatrix(mapMatrix, translation.x, translation.y);  
   geojsonGL.draw(mapMatrix);
+  dotmapGl.draw(mapMatrix);
 }
 
 function init() {
@@ -46,9 +48,15 @@ function init() {
 
   gl = canvasLayer.canvas.getContext('experimental-webgl');
   gl.getExtension("OES_standard_derivatives");
+
   geojsonGL = new GeoJSONGL(gl);
   geojsonGL.getData('../data/belfast.geojson', function(data) {
     geojsonGL.setData(data);
+  })
+
+ dotmapGl = new DotmapGl(gl);
+  dotmapGl.getBin('../data/dotmap-2011.bin', function(data) {
+    dotmapGl.setBuffer(data);
   })
 }
 

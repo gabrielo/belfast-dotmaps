@@ -92,7 +92,7 @@ GeoJSONGL.prototype.draw = function draw(transform, options) {
     if (this.buffer.ready) {
         var options = options || {};
         var gl = this.gl;
-        gl.clear(gl.COLOR_BUFFER_BIT);
+        //gl.clear(gl.COLOR_BUFFER_BIT);
         gl.enable(gl.BLEND);
         gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
         var program = this.program;
