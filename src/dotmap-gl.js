@@ -45,7 +45,9 @@ var DotmapGl = function DotmapGl(gl) {
         'count': 0,
         'buffer': null,
         'ready': false
-    }
+    };
+    this.showDotmap = false;
+
 }
 
 DotmapGl.prototype.getBin = function(url, callback) {
@@ -68,10 +70,10 @@ DotmapGl.prototype.setBuffer = function(data) {
 }
 
 DotmapGl.prototype.draw = function draw(transform, options) {
-    if (this.buffer.ready) {
+    if (this.buffer.ready && this.showDotmap) {
         var options = options || {};
         var gl = this.gl;
-        //gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.clear(gl.COLOR_BUFFER_BIT);
         gl.enable(gl.BLEND);
         gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
         var program = this.program;
