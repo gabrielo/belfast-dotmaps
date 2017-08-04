@@ -1,5 +1,6 @@
 var geojsonGL;
-var dotmapGl;
+var dotmapGl_2011;
+var dotmapGl_2001;
 var map;
 var gl;
 var canvasLayer;
@@ -38,7 +39,8 @@ function update() {
   var translation = canvasLayer.getMapTranslation();
   translateMatrix(mapMatrix, translation.x, translation.y);  
   geojsonGL.draw(mapMatrix);
-  dotmapGl.draw(mapMatrix);
+  dotmapGl_2011.draw(mapMatrix);
+  dotmapGl_2001.draw(mapMatrix);
 }
 
 function init() {
@@ -56,13 +58,21 @@ function init() {
     geojsonGL.setData(data);
   })
 
- dotmapGl = new DotmapGl(gl);
-  dotmapGl.getBin('../data/dotmap-2011.bin', function(data) {
-    dotmapGl.setBuffer(data);
+  dotmapGl_2011 = new DotmapGl(gl);
+  dotmapGl_2011.getBin('../data/dotmap-2011.bin', function(data) {
+    dotmapGl_2011.setBuffer(data);
   })
+
+  dotmapGl_2001 = new DotmapGl(gl);
+  dotmapGl_2001.showDotmap = false;
+  dotmapGl_2001.getBin('../data/dotmap-2001.bin', function(data) {
+    dotmapGl_2001.setBuffer(data);
+  })
+
   gui = new dat.GUI();
   gui.add(geojsonGL, 'showSmallAreas');
-  gui.add(dotmapGl, 'showDotmap');
+  gui.add(dotmapGl_2011, 'showDotmap').name('2011');
+  gui.add(dotmapGl_2001, 'showDotmap').name('2001');
 
 }
 
