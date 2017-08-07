@@ -1,6 +1,7 @@
 var geojsonGL;
 var dotmapGl_2011;
 var dotmapGl_2001;
+var dotmapGl_1991;
 var map;
 var gl;
 var canvasLayer;
@@ -9,8 +10,8 @@ var pixelsToWebGLMatrix = new Float32Array(16);
 var gui;
 
 var mapOptions = {
-  zoom: 11,
-  center: new google.maps.LatLng(54.59, -5.92),
+  zoom: 12,
+  center: new google.maps.LatLng(54.59, -5.85),
   styles: mapStyles
 };
 
@@ -39,8 +40,18 @@ function update() {
   var translation = canvasLayer.getMapTranslation();
   translateMatrix(mapMatrix, translation.x, translation.y);  
   geojsonGL.draw(mapMatrix);
-  dotmapGl_2011.draw(mapMatrix);
-  dotmapGl_2001.draw(mapMatrix);
+
+  var countryLevelZoom = 12;
+  var countryPointSizePixels = 1;
+
+  var blockLevelZoom = 22;
+  var blockPointSizePixels = 10;
+
+  var pointSize = countryPointSizePixels * Math.pow(blockPointSizePixels / countryPointSizePixels, (map.zoom - countryLevelZoom) / (blockLevelZoom - countryLevelZoom));
+
+  dotmapGl_2011.draw(mapMatrix, {pointSize: pointSize});
+  dotmapGl_2001.draw(mapMatrix, {pointSize: pointSize});
+  dotmapGl_1991.draw(mapMatrix, {pointSize: pointSize});
 }
 
 function init() {
@@ -69,10 +80,17 @@ function init() {
     dotmapGl_2001.setBuffer(data);
   })
 
+  dotmapGl_1991 = new DotmapGl(gl);
+  dotmapGl_1991.showDotmap = false;
+  dotmapGl_1991.getBin('../data/dotmap-1991.bin', function(data) {
+    dotmapGl_1991.setBuffer(data);
+  })
+
   gui = new dat.GUI();
   gui.add(geojsonGL, 'showSmallAreas');
   gui.add(dotmapGl_2011, 'showDotmap').name('2011');
   gui.add(dotmapGl_2001, 'showDotmap').name('2001');
+  gui.add(dotmapGl_1991, 'showDotmap').name('1991');
 
 }
 
