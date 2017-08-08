@@ -4,6 +4,7 @@ var dotmapGl_2001;
 var dotmapGl_1991;
 var dotmapGl_1981;
 var dotmapGl_1971;
+var interfaceBarriers;
 var map;
 var gl;
 var canvasLayer;
@@ -56,6 +57,8 @@ function update() {
   dotmapGl_1991.draw(mapMatrix, {pointSize: pointSize});
   dotmapGl_1981.draw(mapMatrix, {pointSize: pointSize});
   dotmapGl_1971.draw(mapMatrix, {pointSize: pointSize});
+
+  interfaceBarriers.draw(mapMatrix);
 }
 
 function init() {
@@ -102,6 +105,12 @@ function init() {
     dotmapGl_1971.setBuffer(data);
   })
 
+  interfaceBarriers = new InterfaceBarrierGl(gl);
+  interfaceBarriers.showInterfaceBarriers = false;
+  interfaceBarriers.getData('../data/bip_icr_interface_barriers_17.geo_.json', function(data) {
+    interfaceBarriers.setData(data);
+  })
+
   gui = new dat.GUI();
   gui.add(geojsonGL, 'showSmallAreas');
   gui.add(dotmapGl_2011, 'showDotmap').name('2011');
@@ -109,6 +118,7 @@ function init() {
   gui.add(dotmapGl_1991, 'showDotmap').name('1991');
   gui.add(dotmapGl_1981, 'showDotmap').name('1981');
   gui.add(dotmapGl_1971, 'showDotmap').name('1971');
+  gui.add(interfaceBarriers, 'showInterfaceBarriers').name('showBarriers');
 
 }
 
