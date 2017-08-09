@@ -58,7 +58,7 @@ function update() {
   dotmapGl_1981.draw(mapMatrix, {pointSize: pointSize});
   dotmapGl_1971.draw(mapMatrix, {pointSize: pointSize});
 
-  interfaceBarriers.draw(mapMatrix);
+  //interfaceBarriers.draw(mapMatrix);
 }
 
 function init() {
@@ -111,6 +111,31 @@ function init() {
     interfaceBarriers.setData(data);
   })
 
+   // Load GeoJSON.
+   map.data.loadGeoJson('../data/bip_icr_interface_barriers_17.geo_.json');
+
+  // Color each letter gray. Change the color when the isColorful property
+  // is set to true.
+  map.data.setStyle(function(feature) {
+    var color = '#3c2111';
+    //if (feature.getProperty('isColorful')) {
+    //  color = feature.getProperty('color');
+    //}
+    return /** @type {google.maps.Data.StyleOptions} */({
+      clickable: false,
+      fillColor: color,
+      strokeColor: color,
+      strokeWeight: 3
+    });
+  });
+      map.data.setStyle({visible: false});
+
+  var IB = function() {
+    this.showInterfaceBarriers = false;
+  }
+
+  var ib = new IB();
+
   gui = new dat.GUI();
   gui.add(geojsonGL, 'showSmallAreas');
   gui.add(dotmapGl_2011, 'showDotmap').name('2011');
@@ -118,8 +143,17 @@ function init() {
   gui.add(dotmapGl_1991, 'showDotmap').name('1991');
   gui.add(dotmapGl_1981, 'showDotmap').name('1981');
   gui.add(dotmapGl_1971, 'showDotmap').name('1971');
-  gui.add(interfaceBarriers, 'showInterfaceBarriers').name('showBarriers');
 
+  var controller = gui.add(ib, 'showInterfaceBarriers').name('showBarriers');
+
+  controller.onChange(function(value) {
+    if (value) {
+      map.data.setStyle({visible: true});
+
+    } else {
+      map.data.setStyle({visible: false});
+    }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', init, false);
