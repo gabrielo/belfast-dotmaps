@@ -81,6 +81,7 @@ function init() {
   })
 
   dotmapGl_2011 = new DotmapGl(gl);
+  dotmapGl_2011.showDotmap = false;
   dotmapGl_2011.getBin('../data/dotmap-2011.bin', function(data) {
     dotmapGl_2011.setBuffer(data);
   })
@@ -110,7 +111,7 @@ function init() {
   })
 
   animatedDotmapGl = new AnimatedDotmapGl(gl);
-  animatedDotmapGl.showAnimatedDotmap = false;
+  animatedDotmapGl.showAnimatedDotmap = true;
   animatedDotmapGl.getBin('../data/animated-dotmap.bin', function(data) {
     animatedDotmapGl.setBuffer(data);
   })
