@@ -158,7 +158,7 @@ function init() {
   gui.add(dotmapGl_1991, 'showDotmap').name('1991');
   gui.add(dotmapGl_1981, 'showDotmap').name('1981');
   gui.add(dotmapGl_1971, 'showDotmap').name('1971');
-  gui.add(animatedDotmapGl, 'showAnimatedDotmap').name('Animate');
+  gui.add(animatedDotmapGl, 'showAnimatedDotmap').name('All');
   gui.add(ad, 'currentYear').min(1971).max(2011).step(1);
 
   var controller = gui.add(ib, 'showInterfaceBarriers').name('showBarriers');
