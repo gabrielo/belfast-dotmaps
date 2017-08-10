@@ -13,6 +13,7 @@ var canvasLayer;
 var mapMatrix = new Float32Array(16);
 var pixelsToWebGLMatrix = new Float32Array(16);
 var gui;
+var timeSlider;
 
 var mapOptions = {
   zoom: 12,
@@ -60,9 +61,30 @@ function update() {
   dotmapGl_1981.draw(mapMatrix, {pointSize: pointSize});
   dotmapGl_1971.draw(mapMatrix, {pointSize: pointSize});
 
-  animatedDotmapGl.draw(mapMatrix, {pointSize: pointSize, current: ad.currentYear});
+  var currentYear = new Date(timeSlider.getCurrentTime()).getFullYear();
+  animatedDotmapGl.draw(mapMatrix, {pointSize: pointSize, current: currentYear});
+  timeSlider.animate();
 
   //interfaceBarriers.draw(mapMatrix);
+}
+
+function initTimeSlider() {
+  var timeSlider = new TimeSlider({
+    startTime: new Date("1971-01-03").getTime(),
+    endTime: new Date("2011-12-31").getTime(),
+    dwellAnimationTime: 2 * 1000,
+    increment: 30*24*60*60*1000,
+    //span: 21*60*60*30*1000,
+    formatCurrentTime: function(date) {
+      return date.getFullYear();
+    },
+    animationRate: {
+      fast: 20,
+      medium: 40,
+      slow: 80
+    }
+  });  
+  return timeSlider;
 }
 
 function init() {
@@ -71,6 +93,8 @@ function init() {
 
   canvasLayerOptions.map = map;
   canvasLayer = new CanvasLayer(canvasLayerOptions);
+
+  timeSlider = initTimeSlider();
 
   gl = canvasLayer.canvas.getContext('experimental-webgl');
   gl.getExtension("OES_standard_derivatives");
@@ -148,6 +172,7 @@ function init() {
 
   var AD = function() {
     this.currentYear = 1971;
+    this.animate = false;
   }
 
   ad = new AD();
@@ -161,6 +186,7 @@ function init() {
   gui.add(dotmapGl_1971, 'showDotmap').name('1971');
   gui.add(animatedDotmapGl, 'showAnimatedDotmap').name('All');
   gui.add(ad, 'currentYear').min(1971).max(2011).step(1);
+  gui.add(ad, 'animate');
 
   var controller = gui.add(ib, 'showInterfaceBarriers').name('showBarriers');
 
