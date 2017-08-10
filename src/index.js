@@ -4,6 +4,8 @@ var dotmapGl_2001;
 var dotmapGl_1991;
 var dotmapGl_1981;
 var dotmapGl_1971;
+var animatedDotmapGl;
+var ad;
 var interfaceBarriers;
 var map;
 var gl;
@@ -58,6 +60,8 @@ function update() {
   dotmapGl_1981.draw(mapMatrix, {pointSize: pointSize});
   dotmapGl_1971.draw(mapMatrix, {pointSize: pointSize});
 
+  animatedDotmapGl.draw(mapMatrix, {pointSize: pointSize, current: ad.currentYear});
+
   //interfaceBarriers.draw(mapMatrix);
 }
 
@@ -105,6 +109,12 @@ function init() {
     dotmapGl_1971.setBuffer(data);
   })
 
+  animatedDotmapGl = new AnimatedDotmapGl(gl);
+  animatedDotmapGl.showAnimatedDotmap = false;
+  animatedDotmapGl.getBin('../data/animated-dotmap.bin', function(data) {
+    animatedDotmapGl.setBuffer(data);
+  })
+
   interfaceBarriers = new InterfaceBarrierGl(gl);
   interfaceBarriers.showInterfaceBarriers = false;
   interfaceBarriers.getData('../data/bip_icr_interface_barriers_17.geo_.json', function(data) {
@@ -133,8 +143,13 @@ function init() {
   var IB = function() {
     this.showInterfaceBarriers = false;
   }
-
   var ib = new IB();
+
+  var AD = function() {
+    this.currentYear = 1971;
+  }
+
+  ad = new AD();
 
   gui = new dat.GUI();
   gui.add(geojsonGL, 'showSmallAreas');
@@ -143,6 +158,8 @@ function init() {
   gui.add(dotmapGl_1991, 'showDotmap').name('1991');
   gui.add(dotmapGl_1981, 'showDotmap').name('1981');
   gui.add(dotmapGl_1971, 'showDotmap').name('1971');
+  gui.add(animatedDotmapGl, 'showAnimatedDotmap').name('Animate');
+  gui.add(ad, 'currentYear').min(1971).max(2011).step(1);
 
   var controller = gui.add(ib, 'showInterfaceBarriers').name('showBarriers');
 
