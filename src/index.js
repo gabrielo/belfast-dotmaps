@@ -176,7 +176,7 @@ function init() {
   }
 
   ad = new AD();
-
+/*
   gui = new dat.GUI();
   gui.add(geojsonGL, 'showSmallAreas');
   gui.add(dotmapGl_2011, 'showDotmap').name('2011');
@@ -198,6 +198,7 @@ function init() {
       map.data.setStyle({visible: false});
     }
   });
+  */
 }
 
 document.addEventListener('DOMContentLoaded', init, false);
