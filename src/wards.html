@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Belfast Dotmaps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+   <style>
+      html, body, #map-div {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      .my-legend {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 1000;
+        background-color: rgba(255,255,255,.75);
+        border: 1px solid black;
+        width: 245px;
+        padding: 3px;
+      }
+      .my-legend .legend-title {
+        text-align: left;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 90%;
+        }
+      .my-legend .legend-scale ul {
+        margin: 0;
+        margin-bottom: 5px;
+        padding: 0;
+        float: left;
+        list-style: none;
+        }
+      .my-legend .legend-scale ul li {
+        font-size: 80%;
+        list-style: none;
+        margin-left: 0;
+        line-height: 18px;
+        margin-bottom: 2px;
+        }
+      .my-legend ul.legend-labels li span {
+        display: block;
+        float: left;
+        height: 16px;
+        width: 30px;
+        margin-right: 5px;
+        margin-left: 0;
+        border: 1px solid #999;
+        }
+      .my-legend .legend-source {
+        font-size: 70%;
+        color: #999;
+        clear: both;
+        }
+      .my-legend a {
+        color: #777;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://explorables.cmucreatelab.org/data-visualization-tools/css/defaultUI.css" />    
+    <script src="https://maps.googleapis.com/maps/api/js?key=GM_JS_API_KEY&libraries=places"></script>
+    <script src="https://explorables.cmucreatelab.org/data-visualization-tools/js/CanvasLayer.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://explorables.cmucreatelab.org/data-visualization-tools/js/TimeSlider.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="geojson-gl.js"></script>
+    <script src="dotmap-gl.js"></script>
+    <script src="ib-gl.js"></script>
+    <script src="animated-dotmap-gl.js"></script>
+    <script src="wards.js"></script>
+  </head>
+  <body>
+    <div id="map-div"></div>
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+  </body>
+</html>
