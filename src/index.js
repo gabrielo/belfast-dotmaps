@@ -87,9 +87,9 @@ function initTimeSlider(opts) {
       return date.getFullYear();
     },
     animationRate: {
-      fast: 20,
-      medium: 40,
-      slow: 80
+      fast: 10,
+      medium: 30,
+      slow: 60
     }
   });  
   return timeSlider;
