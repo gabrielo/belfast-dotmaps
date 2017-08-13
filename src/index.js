@@ -68,10 +68,18 @@ function update() {
   //interfaceBarriers.draw(mapMatrix);
 }
 
-function initTimeSlider() {
+function initTimeSlider(opts) {
+  var startTime = new Date("1971-01-03").getTime();
+  var endTime = new Date("2011-12-31").getTime();
+  if (opts.startTime) {
+    startTime = opts.startTime;
+  }
+  if (opts.endTime) {
+    endTime = opts.endTime;
+  }
   var timeSlider = new TimeSlider({
-    startTime: new Date("1971-01-03").getTime(),
-    endTime: new Date("2011-12-31").getTime(),
+    startTime: startTime,
+    endTime: endTime,
     dwellAnimationTime: 2 * 1000,
     increment: 30*24*60*60*1000,
     //span: 21*60*60*30*1000,
@@ -89,12 +97,21 @@ function initTimeSlider() {
 
 function init() {
   var mapDiv = document.getElementById('map-div');
+  var animatedDotmapUrl = '../data/animated-dotmap.bin';
   map = new google.maps.Map(mapDiv, mapOptions);
 
   canvasLayerOptions.map = map;
   canvasLayer = new CanvasLayer(canvasLayerOptions);
 
-  timeSlider = initTimeSlider();
+  var timeSliderOptions = {};
+  var parsedUrl = new URL(window.location.href);
+  if (parsedUrl.searchParams.get("show1926_1971")) {
+    timeSliderOptions['startTime'] = new Date("1926-01-03").getTime();    
+    timeSliderOptions['endTime'] = new Date("1971-12-15").getTime();    
+    animatedDotmapUrl = '../data/animated-dotmap-1926_1971.bin';
+  }
+
+  timeSlider = initTimeSlider(timeSliderOptions);
 
   gl = canvasLayer.canvas.getContext('experimental-webgl');
   gl.getExtension("OES_standard_derivatives");
@@ -134,9 +151,11 @@ function init() {
     dotmapGl_1971.setBuffer(data);
   })
 
+
   animatedDotmapGl = new AnimatedDotmapGl(gl);
   animatedDotmapGl.showAnimatedDotmap = true;
-  animatedDotmapGl.getBin('../data/animated-dotmap.bin', function(data) {
+//  animatedDotmapGl.getBin('../data/animated-dotmap.bin', function(data) {
+  animatedDotmapGl.getBin(animatedDotmapUrl, function(data) {
     animatedDotmapGl.setBuffer(data);
   })
 
