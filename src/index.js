@@ -134,6 +134,13 @@ function init() {
 
   var timeSliderOptions = {};
   var parsedUrl = new URL(window.location.href);
+
+  if (parsedUrl.searchParams.get("hideLegend")) {
+    var el = document.getElementById('legend');
+    console.log(el);
+    el.style['visibility'] = 'hidden';
+  }
+
   if (parsedUrl.searchParams.get("show1926_1971")) {
     timeSliderOptions['startTime'] = new Date("1926-01-03").getTime();    
     timeSliderOptions['endTime'] = new Date("1971-12-15").getTime();    
