@@ -64,7 +64,7 @@ function update() {
   var currentYear = new Date(timeSlider.getCurrentTime()).getFullYear();
   animatedDotmapGl.draw(mapMatrix, {pointSize: pointSize, current: currentYear});
   timeSlider.animate();
-
+  showBarrier(currentYear);
   //interfaceBarriers.draw(mapMatrix);
 }
 
@@ -93,6 +93,35 @@ function initTimeSlider(opts) {
     }
   });  
   return timeSlider;
+}
+
+function showBarrier(currentYear) {
+  map.data.setStyle(function(feature) {
+    var yearBuilt = feature.getProperty('year_built');
+    var visible = false;
+    if (yearBuilt != '') {
+      if (yearBuilt.split('&').length == 2) {
+        var split = yearBuilt.split('&');
+        if (split[0] == "nd") {
+          yearBuilt = split[1];
+        } else {
+          yearBuilt = split[0];
+        }
+      }
+      var s = yearBuilt.split('s');
+      if (s.length == 2) {
+        yearBuilt = s[0];
+      }
+      if (yearBuilt <= currentYear) {
+        visible = true;
+      }
+
+    }
+    return /** @type {google.maps.Data.StyleOptions} */({
+      visible: visible
+    });
+  });
+
 }
 
 function init() {
@@ -182,7 +211,7 @@ function init() {
       strokeWeight: 3
     });
   });
-      map.data.setStyle({visible: false});
+  map.data.setStyle({visible: false});
 
   var IB = function() {
     this.showInterfaceBarriers = false;
