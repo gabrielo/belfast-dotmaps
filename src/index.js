@@ -99,24 +99,26 @@ function showBarrier(currentYear) {
   map.data.setStyle(function(feature) {
     var yearBuilt = feature.getProperty('year_built');
     var visible = false;
-    if (yearBuilt != '') {
-      if (yearBuilt.split('&').length == 2) {
-        var split = yearBuilt.split('&');
-        if (split[0] == "nd") {
-          yearBuilt = split[1];
-        } else {
-          yearBuilt = split[0];
-        }
-      }
-      var s = yearBuilt.split('s');
-      if (s.length == 2) {
-        yearBuilt = s[0];
-      }
-      if (yearBuilt <= currentYear) {
-        visible = true;
-      }
-
+    if (yearBuilt == '') {
+      yearBuilt = '2001';
     }
+    if (yearBuilt.split('&').length == 2) {
+      var split = yearBuilt.split('&');
+      if (split[0] == "nd") {
+        yearBuilt = split[1];
+      } else {
+        yearBuilt = split[0];
+      }
+    }
+    var s = yearBuilt.split('s');
+    if (s.length == 2) {
+      yearBuilt = s[0];
+    }
+    if (yearBuilt <= currentYear) {
+      visible = true;
+    }
+
+    
     return /** @type {google.maps.Data.StyleOptions} */({
       visible: visible
     });
